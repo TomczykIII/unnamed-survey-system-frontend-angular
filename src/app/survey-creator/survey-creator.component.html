@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <label for="SurveyTitle" class="form-label">Survey Title</label>
+    <input
+      [(ngModel)]="survey.Title"
+      type="text"
+      class="form-control"
+      id="SurveyTitle"
+      placeholder="Type title of your survey"
+    />
+    <div *ngFor="let page of survey.Pages">
+      <!-- Dunno if id should be static value -->
+      <label for="PageTitle" class="form-label">Page Title</label>
+      <input
+        [(ngModel)]="page.Title"
+        type="text"
+        class="form-control"
+        id="PageTitle"
+        placeholder="Type title of your page"
+      />
+      <div *ngFor="let question of page.Questions">
+        <app-question [question]='question'></app-question>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary" (click)="test()">Click MEEEEEEE</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div [ngSwitch]='question.Type'>
+  <div *ngSwitchCase='questionType.Text' class="card mt-3 p-3">
+    <select class="form-select" aria-label="Default select example" (change)='ChangeType($event?.target?.value)'>
+      <option *ngFor='let item of questionType | enumToArray;index as i' [value]="item.index"
+        [selected]="question.Type===item.index">{{item.name}}
+      </option>
+    </select>
+    <input [(ngModel)]="question.Questions[0]" type="text" class="form-control" id="Question" placeholder="Question" />
+  </div>
+  <div *ngSwitchCase='questionType.Multiple || questionType.Single' class="card mt-3 p-3">
+    <select class="form-select" aria-label="Default select example" (change)='ChangeType($event?.target?.value)'>
+      <option *ngFor='let item of questionType | enumToArray; index as i' [value]="item.index"
+        [selected]='question.Type===item.index'>{{item.name}}</option>
+    </select>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="display: flex;"
+        *ngFor="let item of question.Questions; index as i; trackBy:trackByFn">
+        <input [(ngModel)]="question.Questions[i]" type="text" class="form-control" placeholder="Type your question" />
+        <button type="button" class="btn-close m-2" aria-label="Close" (click)="DeleteQuestion(i)"></button>
+      </li>
+    </ul>
+    <button (click)="AddQuestion()">Add question</button>
+  </div>
+  <div *ngSwitchCase='questionType.Single'>
+    <select class="form-select" aria-label="Default select example" (change)='ChangeType($event?.target?.value)'>
+      <option *ngFor='let item of questionType | enumToArray' [value]="item.index"
+        [selected]='question.Type===item.index'>{{item.name}}</option>
+    </select>
+  </div>
+</div>
