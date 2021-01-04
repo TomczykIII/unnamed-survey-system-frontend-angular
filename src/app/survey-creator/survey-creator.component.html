@@ -1,31 +1,45 @@
 <div class="container">
   <div class="row">
     <label for="SurveyTitle" class="form-label">Survey Title</label>
-    <input
-      [(ngModel)]="survey.Title"
-      type="text"
-      class="form-control"
-      id="SurveyTitle"
-      placeholder="Type title of your survey"
-    />
-    <div *ngFor="let page of survey.Pages">
+    <input [(ngModel)]="survey.Title" type="text" class="form-control" id="SurveyTitle"
+      placeholder="Type title of your survey" />
+    <div >
       <!-- Dunno if id should be static value -->
       <label for="PageTitle" class="form-label">Page Title</label>
-      <input
-        [(ngModel)]="page.Title"
-        type="text"
-        class="form-control"
-        id="PageTitle"
-        placeholder="Type title of your page"
-      />
-      <div *ngFor="let question of page.Questions">
-        <app-question [question]='question'></app-question>
+      <input [(ngModel)]="survey.Pages[currentIndex].Title" type="text" class="form-control" id="PageTitle"
+        placeholder="Type title of your page" />
+      <div *ngFor="let question of survey.Pages[currentIndex].Questions; index as i">
+        <app-question [question]='question' (deleteQuestion)="DeleteQuestion(i)"></app-question>
       </div>
+      <div class="d-flex justify-content-between">
+        <button (click)="AddQuestion()">Add question</button>
+        <button (click)="AddPage()">Add page</button>
+        <button (click)="RemovePage()">Remove page</button>
+      </div>
+    </div>
+  </div>
+  <div #paginator class="row">
+    <div class="col d-flex justify-content-center">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous" (click)="ChangePage(currentIndex-1)">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let item of survey.Pages; index as i" (click)="ChangePage(i)"><a class="page-link" href="#">{{1+i}}</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next" (click)="ChangePage(currentIndex+1)">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <button class="btn btn-primary" (click)="test()">Click MEEEEEEE</button>
+      <button class="btn btn-primary" (click)="SaveSurvey()">Save</button>
     </div>
   </div>
 </div>

@@ -3,6 +3,8 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Output,
+  EventEmitter,
   SimpleChanges,
 } from '@angular/core';
 import { Question, QuestionType } from '../../models/survey';
@@ -17,46 +19,34 @@ export class QuestionComponent implements OnChanges {
   questionType = QuestionType;
 
   @Input() question!: Question;
+  @Output() deleteQuestion = new EventEmitter<boolean>();
   constructor() {
   }
   ngOnChanges(changes: SimpleChanges): void {
 
   }
-  AddQuestion() {
-    this.question.Questions.push("");
+  AddChoice() {
+    this.question.Choices?.push("");
   }
-  DeleteQuestion(index: number) {
-    this.question.Questions.splice(index, 1);
+  DeleteChoice(index: number) {
+    this.question.Choices?.splice(index, 1);
   }
-  ChangeType(value: string) {
-    this.question.Type =this.mapValueToEnum(+value);
-    this.question.Questions = [''];
+  ChangeType(event: Event) {
+    let value = (<HTMLSelectElement>event.target).value;
+    this.question.Type = +value;
+    this.question.Question = '';
+    if (this.question.Type === QuestionType.Multiple || this.question.Type === QuestionType.Single) {
+      this.question.Choices = [''];
+    }
+    if (this.question.Type === QuestionType.Text) {
+      this.question.Choices = [];
+    }
   }
   trackByFn(index: any, item: any) {
     return index;
   }
-  //refactor this
-  mapValueToEnum(value: number): QuestionType {
-    switch (value) {
-      case 2:
-        {
-          return QuestionType.Multiple
-          break;
-        }
-
-      case 1:
-        {
-          return QuestionType.Single
-          break;
-        }
-      case 0:
-        {
-          return QuestionType.Text
-          break;
-        }
-      default:
-        throw new Error(`no enum for value: ${value}`)
-        break;
-    }
+  DeleteQuestion() {
+    this.deleteQuestion.emit(true);
   }
+
 }

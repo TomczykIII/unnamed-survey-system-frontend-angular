@@ -8,7 +8,8 @@ export interface Page {
 }
 export interface Question {
   Type: QuestionType;
-  Questions: Array<string>;
+  Question: string;
+  Choices: Array<string>;
 }
 export enum QuestionType {
   Text,

@@ -8,10 +8,13 @@ import { FormsModule } from '@angular/forms';
 import { QuestionComponent } from './question/question.component';
 import { EnumToArrayPipe } from './enum-to-array.pipe';
 
+import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 @NgModule({
-  declarations: [AppComponent, SurveyCreatorComponent, QuestionComponent, EnumToArrayPipe],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  declarations: [AppComponent, SurveyCreatorComponent, QuestionComponent, EnumToArrayPipe, DashboardComponent, NotfoundComponent],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
